@@ -29,6 +29,9 @@ class OperationType(IntEnum):
   SUB = 1
   MUL = 2
   DIV = 3
+  EQUALITY = 4
+  LESS = 5
+  GREATER = 6
 
 @unique
 class StatementType(IntEnum):
