@@ -13,6 +13,14 @@ class Chain:
 
 def optional(expr):
     return expr if type(expr) != Chain else expr.fail
+
+def sequence(*args):
+    res = []
+    for f in args[0]:
+        res.append(f)
+        if f == None:
+            return [None]*len(args[0])
+    return res
     
 class Parser:
     def __init__(self, program: List[Token]):
@@ -201,3 +209,15 @@ class Parser:
             return Expression(BINARY_EXPRESSION, left, right, MUL if op.type == TIMES else DIV)
         else:
             return right
+
+    def parse_primary(self) -> Statement:
+        return optional(
+            Chain(None)
+            | parse_number()
+            | parse_identifier()
+            | sequence(
+                MATCH(LEFT_PAREN),
+                parse_expression(),
+                MATCH(RIGHT_PAREN)
+            )[1]
+        )
