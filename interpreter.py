@@ -23,7 +23,7 @@ class Environment:
       # could be necessary for checking 
       # if not isinstance(smt.cond, bool):
       #   raise Exception("While statement expected boolean condition")
-      if smt.cond is 1:
+      while smt.cond is 1:
         for smt_in_while in smt.body:
           self.execute_stmt(smt_in_while)
     
