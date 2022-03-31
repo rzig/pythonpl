@@ -1,3 +1,4 @@
+from lib2to3.pgen2.token import GREATER
 from tree import *
 
 class Environment:
@@ -51,7 +52,19 @@ class Environment:
         left = self.execute_expr(expr.left)
         right = self.execute_expr(expr.right)
         return left / right
-
+      elif expr.op is OperationType.EQUALITY:
+        left = self.execute_expr(expr.left)
+        right = self.execute_expr(expr.right)
+        return 1 if left is right else 0
+      elif expr.op is OperationType.LESS:
+        left = self.execute_expr(expr.left)
+        right = self.execute_expr(expr.right)
+        return 1 if left < right else 0
+      elif expr.op is OperationType.GREATER:
+        left = self.execute_expr(expr.left)
+        right = self.execute_expr(expr.right)
+        return 1 if left > right else 0
+    
     elif expr.type is ExpressionType.IDENTIFIER_EXPRESSION:
       if expr.iden in self.variables:
         return self.variables[expr.iden]
