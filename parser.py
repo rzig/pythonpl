@@ -121,3 +121,83 @@ class Parser:
             self.cur_index = start
             return None
         return Statement(IF_STATEMENT, cond, stmts)
+
+    def parse_expression(self) -> Statement:
+        return optional(
+            Chain(None)
+            | parse_assignment()
+            | parse_equality()
+        )
+
+    def parse_assignment(self) -> Statement:
+        start = self.cur_index
+        identifier = match(IDENTIFIER)
+        if not identifier:
+            self.cur_index = start
+            return None
+        if not match(EQUALS):
+            self.cur_index = start
+            return None
+        assign = parse_assignment()
+        if not assign:
+            raise Exception("Expected assignment")
+        return Statement(ASSIGN_STATEMENT, identifier, assign)
+        
+    def parse_equality(self) -> Statement:
+        start = self.cur_index
+        left = parse_comparison()
+        if not left:
+            return None
+        if not match(EQUALS_EQUALS):
+            start = self.cur_index
+            return None
+        right = parse_equality()
+        if right:
+            return Expression(BINARY_EXPRESSION, left, right, EQUALITY)
+        else:
+            return right
+            
+    def parse_comparison(self) -> Statement:
+        start = self.cur_index
+        left = parse_term()
+        if not left:
+            return None
+        op = optional(Chain(None) | match(GREATER_THAN) | match(LESS_THAN))
+        if not op:
+            start = self.cur_index
+            return None
+        right = parse_comparison()
+        if right:
+            return Expression(BINARY_EXPRESSION, left, right, GREATER if op.type == GREATER_THAN else LESS)
+        else:
+            return right
+            
+    def parse_term(self) -> Statement:
+        start = self.cur_index
+        left = parse_factor()
+        if not left:
+            return None
+        op = optional(Chain(None) | match(PLUS) | match(MINUS))
+        if not op:
+            start = self.cur_index
+            return None
+        right = parse_term()
+        if right:
+            return Expression(BINARY_EXPRESSION, left, right, ADD if op.type == PLUS else SUB)
+        else:
+            return right
+            
+    def parse_factor(self) -> Statement:
+        start = self.cur_index
+        left = parse_primary()
+        if not left:
+            return None
+        op = optional(Chain(None) | match(TIMES) | match(DIVIDE))
+        if not op:
+            start = self.cur_index
+            return None
+        right = parse_factor()
+        if right:
+            return Expression(BINARY_EXPRESSION, left, right, MUL if op.type == TIMES else DIV)
+        else:
+            return right
