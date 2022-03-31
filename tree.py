@@ -24,6 +24,13 @@ class Expression:
             self.num = arg1
 
 @unique
+class OperationType(IntEnum):
+  ADD = 0
+  SUB = 1
+  MUL = 2
+  DIV = 3
+
+@unique
 class StatementType(IntEnum):
     LET_STATEMENT = 0
     CONST_STATEMENT = 1
