@@ -20,6 +20,7 @@ class TokenType(IntEnum):
     NUMBER = 14
     END = 15
     WHILE = 16
+    IF = 17
 
 class Token: 
     def __init__(self, lexed: str, line: int, col: int, ttype: TokenType):
@@ -29,12 +30,13 @@ class Token:
         self.type = ttype
 
     def __str__(self):
-        return "<Token " + str(self.type) + "@" + str(self.line) + "," + str(self.col) + ">"
+        return "<Token " + str(self.type) + "@" + str(self.line) + "," + str(self.col) + ": \"" + self.lexed + "\">"
 
 keywords = {
     "let": TokenType.LET,
     "const": TokenType.CONST,
-    "while": TokenType.WHILE
+    "while": TokenType.WHILE,
+    "if": TokenType.IF
 }
 
 symbols = {
@@ -89,7 +91,7 @@ def lex(program: str) -> List[Token]:
     tokens = []
     while idx < len(program):
         current_token = program[idx]
-        print(current_token, starts_sym(current_token))
+        #print(current_token, starts_sym(current_token))
         token_instance = None
         if starts_sym(current_token):
             while idx + 1 < len(program) and is_sym(current_token + program[idx+1]):

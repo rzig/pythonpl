@@ -1,3 +1,26 @@
-program := declaration* EOF
+program := statement* EOF
 
-declaration := statement
+statement := letStatement
+           | constStatement
+	   | whileStatement
+	   | ifStatement
+	   | expression
+
+letStatement := "let" identifier "=" expression ";"
+constStatement := "const" identifier "=" expression ";"
+whileStatement := "while" expression "{" statement* "}"
+ifStatement := "if" expression "{" statement* "}"
+
+expression := assignment
+assignment := identifier "=" assignment | equality
+equality := comparison (("==") comparison)*
+comparison := term ((">" | "<") term)*
+term := factor (("+" | "-") factor)*
+factor := primary (("*" | "/") primary)*
+primary := number | identifier | "(" expression ")"
+
+// Picked out by lexer
+identifier := alpha (alpha | digit)*
+number := digit+ ("." digit+)?
+alpha := "a" ... "z" | "a" ... "z" | "_"
+digit := "0" ... "9"
