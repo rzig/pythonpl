@@ -21,6 +21,10 @@ class TokenType(IntEnum):
     END = 15
     WHILE = 16
     IF = 17
+    PLUS = 18
+    MINUS = 19
+    TIMES = 20
+    DIVIDE = 21
 
 class Token: 
     def __init__(self, lexed: str, line: int, col: int, ttype: TokenType):
@@ -50,7 +54,11 @@ symbols = {
     "]": TokenType.RIGHT_BRACKET,
     "{": TokenType.LEFT_BRACE,
     "}": TokenType.RIGHT_BRACE,
-    ";": TokenType.SEMI
+    ";": TokenType.SEMI,
+    "+": TokenType.PLUS,
+    "-": TokenType.MINUS,
+    "*": TokenType.TIMES,
+    "/": TokenType.DIVIDE
 }
 
 whitespace = set([" ", "\t"])
