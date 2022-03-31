@@ -13,7 +13,7 @@ ifStatement := "if" expression "{" statement* "}"
 
 expression := assignment
 assignment := identifier "=" assignment | equality
-equality := comparison (("==") comparison)*
+equality := comparison (("==") equality)?
 comparison := term ((">" | "<") term)*
 term := factor (("+" | "-") factor)*
 factor := primary (("*" | "/") primary)*

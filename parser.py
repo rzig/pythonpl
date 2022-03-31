@@ -14,10 +14,6 @@ class Chain:
 def optional(expr):
     return expr if type(expr) != Chain else expr.fail
     
-return optional(Chain(None) | parse_let() | parse(...))
-        
-return Chain(None) | parse_let() | parse_xxx()
-
 class Parser:
     def __init__(self, program: List[Token]):
         self.program = program 
@@ -32,6 +28,14 @@ class Parser:
             
     def match(self,*args) -> bool:
         return 
+
+    def parse_program(self) -> List[Statement]:
+        program = []
+        stmt = parse_statement()
+        while stmt:
+            program.append(stmt)
+            stmt = parse_statement()
+        return program
             
     def parse_statement(self) -> Statement:
         return Chain(None) | parse_let_statement() | parse_const_statement() | parse_while_statement() | parse_if_statement() | Statement(EXPRESSION_STATEMENT, parse_expression())
