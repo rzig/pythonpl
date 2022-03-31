@@ -4,7 +4,7 @@ statement := letStatement
            | constStatement
 	   | whileStatement
 	   | ifStatement
-	   | expression
+	   | expression ";"
 
 letStatement := "let" identifier "=" expression ";"
 constStatement := "const" identifier "=" expression ";"
