@@ -10,17 +10,17 @@ class ExpressionType(IntEnum):
 class Expression:
     def __init__(self, ttype: ExpressionType, arg1, arg2=None, arg3=None):
         self.type = ttype
-        if ttype == ASSIGN_EXPRESSION:
+        if ttype == ExpressionType.ASSIGN_EXPRESSION:
             self.const = arg3
             self.left = arg1
             self.right = arg2
-        elif ttype == BINARY_EXPRESSION:
+        elif ttype == ExpressionType.BINARY_EXPRESSION:
             self.op = arg3
             self.left = arg1
             self.right = arg2
-        elif ttype == IDENTIFIER_EXPRESSION:
+        elif ttype == ExpressionType.IDENTIFIER_EXPRESSION:
             self.iden = arg1
-        elif ttype == NUMBER_EXPRESSION:
+        elif ttype == ExpressionType.NUMBER_EXPRESSION:
             self.num = arg1
 
 @unique
@@ -40,21 +40,24 @@ class StatementType(IntEnum):
     WHILE_STATEMENT = 2
     IF_STATEMENT = 3
     EXPRESSION_STATEMENT = 4
+    PRINT_STATEMENT = 5
 
 class Statement:
     def __init__(self, ttype: StatementType, arg1, arg2=None):
         self.type = ttype
-        if ttype == LET_STATEMENT:
+        if ttype == StatementType.LET_STATEMENT:
             self.left = arg1
             self.right = arg2
-        elif ttype == CONST_STATEMENT:
+        elif ttype == StatementType.CONST_STATEMENT:
             self.left = arg1
             self.right = arg2
-        elif ttype == WHILE_STATEMENT:
+        elif ttype == StatementType.WHILE_STATEMENT:
             self.cond = arg1
             self.body = arg2
-        elif ttype == IF_STATEMENT:
+        elif ttype == StatementType.IF_STATEMENT:
             self.cond = arg1
             self.body = arg2
-        elif ttype == EXPRESSION_STATEMENT:
+        elif ttype == StatementType.EXPRESSION_STATEMENT:
+            self.expr = arg1
+        elif ttype == StatementType.PRINT_STATEMENT:
             self.expr = arg1

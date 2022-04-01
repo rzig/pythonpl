@@ -18,7 +18,7 @@ class TokenType(IntEnum):
     RIGHT_BRACE = 12
     SEMI = 13
     NUMBER = 14
-    END = 15
+    PRINT = 15
     WHILE = 16
     IF = 17
     PLUS = 18
@@ -40,7 +40,8 @@ keywords = {
     "let": TokenType.LET,
     "const": TokenType.CONST,
     "while": TokenType.WHILE,
-    "if": TokenType.IF
+    "if": TokenType.IF,
+    "print": TokenType.PRINT
 }
 
 symbols = {
@@ -134,5 +135,4 @@ def lex(program: str) -> List[Token]:
         col += len(current_token) if not is_newline(current_token) else 0
         if token_instance:
             tokens.append(token_instance)
-    tokens.append(Token("", -1, -1, TokenType.END))
     return tokens

@@ -10,9 +10,10 @@ letStatement := "let" identifier "=" expression ";"
 constStatement := "const" identifier "=" expression ";"
 whileStatement := "while" expression "{" statement* "}"
 ifStatement := "if" expression "{" statement* "}"
+printStatement := "print" expression ";"
 
-expression := assignment
-assignment := identifier "=" assignment | equality
+expression := assignment | equality
+assignment := identifier "=" expression
 equality := comparison (("==") equality)?
 comparison := term ((">" | "<") term)*
 term := factor (("+" | "-") factor)*
