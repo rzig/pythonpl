@@ -6,20 +6,6 @@ statement := letStatement
 	   | ifStatement
 	   | expression ";"
 
-letStatement := "let" identifier "=" expression ";"
-constStatement := "const" identifier "=" expression ";"
-whileStatement := "while" expression "{" statement* "}"
-ifStatement := "if" expression "{" statement* "}"
-printStatement := "print" expression ";"
-
-expression := assignment | equality
-assignment := identifier "=" expression
-equality := comparison (("==") equality)?
-comparison := term ((">" | "<") term)*
-term := factor (("+" | "-") factor)*
-factor := primary (("*" | "/") primary)*
-primary := number | identifier | "(" expression ")"
-
 // Picked out by lexer
 identifier := alpha (alpha | digit)*
 number := digit+ ("." digit+)?
